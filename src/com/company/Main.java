@@ -17,6 +17,8 @@ public class Main {
         MinijavaParser parser = new MinijavaParser(tokens);
         ParseTree tree = parser.goal();
 
+        for (Object obj : tokens.getTokens()) System.out.println(obj);
+
         System.out.println("LISP:");
         System.out.println(tree.toStringTree(parser));
         System.out.println();
