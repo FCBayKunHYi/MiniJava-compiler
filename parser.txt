@@ -1,0 +1,2 @@
+LISP:
+(goal (mainClassDeclaration class MyClass (mainClassBody { (mainMethod (mainMethodDeclaration public static void main ( String [ ] args )) { (statement System.out.println ( (expression 6) ) ;) }) })) (classDeclaration class mycl (classBody { (fieldDeclaration (type (intType int)) hh ;) (methodDeclaration public (type (intType int)) dfdf (formalParameters ( )) (methodBody { (statement System.out.println ( (expression 3) ) ;) })) })) <EOF>)

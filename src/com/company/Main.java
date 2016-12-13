@@ -11,7 +11,7 @@ public class Main {
 
     public static void main(String[] args) throws IOException{
 	// write your code here
-        InputStream is = new FileInputStream("example/test.txt"); // or System.in;
+        InputStream is = new FileInputStream("example/test.txt");
         ANTLRInputStream input = new ANTLRInputStream(is);
         MinijavaLexer lexer = new MinijavaLexer(input);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
@@ -24,23 +24,41 @@ public class Main {
 
         //List<Token> TokensList = tokens.getTokens();
 
+        FileWriter fw = null;
+
+        fw = new FileWriter("lexer.txt");
 
         for (Token obj : tokens.getTokens()) {
-            System.out.print(obj);
-            System.out.print(" || Type : ");
      /*       System.out.print(" number ");
             int ind = obj.getType();
             System.out.print(ind);
             System.out.print("   ");*/
-            System.out.println(Voca.getDisplayName(obj.getType()));
+            fw.write(obj.getText());
+            fw.write(" --> Type : ");
+            fw.write(Voca.getDisplayName(obj.getType()));
+            fw.write("      ////   ");
+            fw.write(obj.toString() + '\n');
+
+            System.out.print(obj.getText());
+            System.out.print(" --> Type : ");
+            System.out.print(Voca.getDisplayName(obj.getType()));
+            System.out.print("      ////   ");
+            System.out.println(obj);
 
         }
+
+        fw.close();
+
+        fw = new FileWriter("parser.txt");
+
+        fw.write("LISP:\n");
+        fw.write(tree.toStringTree(parser) + '\n');
 
         System.out.println("LISP:");
         System.out.println(tree.toStringTree(parser));
         System.out.println();
 
-
+        fw.close();
 
     /*    System.out.println("Visitor:");
         EvalVisitor evalByVisitor = new EvalVisitor();
@@ -51,5 +69,20 @@ public class Main {
         ParseTreeWalker walker = new ParseTreeWalker();
         MinijavaBaseListener evalByListener = new MinijavaBaseListener();
         walker.walk(evalByListener, tree);
+
+
+
+        CommonTree tree = r.tree;
+        CommonTreeNodeStream treeStream = new CommonTreeNodeStream(tree);
+        ExprEval walker = new ExprEval(treeStream);
+        try
+        {
+            walker.prog();
+        }
+        catch (RecognitionException e)
+        {
+            e.printStackTrace();
+        }
+
     }
 }
