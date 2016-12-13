@@ -1,9 +1,12 @@
 package com.company;
 
 
+import org.antlr.v4.gui.Trees;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.*;
+
 import java.io.*;
+
 import java.util.List;
 
 
@@ -60,6 +63,7 @@ public class Main {
 
         fw.close();
 
+
     /*    System.out.println("Visitor:");
         EvalVisitor evalByVisitor = new EvalVisitor();
         evalByVisitor.visit(tree);
@@ -70,19 +74,8 @@ public class Main {
         MinijavaBaseListener evalByListener = new MinijavaBaseListener();
         walker.walk(evalByListener, tree);
 
+        Trees.inspect(tree, parser);
 
-
-        CommonTree tree = r.tree;
-        CommonTreeNodeStream treeStream = new CommonTreeNodeStream(tree);
-        ExprEval walker = new ExprEval(treeStream);
-        try
-        {
-            walker.prog();
-        }
-        catch (RecognitionException e)
-        {
-            e.printStackTrace();
-        }
 
     }
 }
