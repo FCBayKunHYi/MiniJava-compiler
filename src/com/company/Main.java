@@ -72,9 +72,9 @@ public class Main {
         System.out.println("Listener:");
         ParseTreeWalker walker = new ParseTreeWalker();
         MinijavaBaseListener evalByListener = new MinijavaBaseListener();
-        walker.walk(evalByListener, tree);
+        walker.walk(new FirstCheckListener(), tree);
 
-        Trees.inspect(tree, parser);
+        //Trees.inspect(tree, parser);
 
 
     }

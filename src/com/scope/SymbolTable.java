@@ -5,7 +5,7 @@ import java.util.HashMap;
 public class SymbolTable {
     String name;
     String STType;
-    SymbolTable parent;
+    public SymbolTable parent;
 
     HashMap<String, SymbolTable> children = new HashMap<String, SymbolTable>();
 
