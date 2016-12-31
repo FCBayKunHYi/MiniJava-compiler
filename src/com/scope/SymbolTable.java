@@ -4,14 +4,15 @@ import java.util.HashMap;
 
 public class SymbolTable {
     public String name;
-    String STType;
-    public SymbolTable parent;
+    public String type;
+    public SymbolTable father;
 
-    HashMap<String, SymbolTable> children = new HashMap<String, SymbolTable>();
+    public HashMap<String, SymbolTable> children = new HashMap<String, SymbolTable>();
 
-    public SymbolTable(String name, SymbolTable parent) {
+    public SymbolTable(String name, SymbolTable father, String type) {
         this.name = name;
-        this.parent = parent;
+        this.father = father;
+        this.type = type;
     }
 
     public boolean defined(String Name) {

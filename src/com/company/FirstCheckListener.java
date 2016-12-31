@@ -5,7 +5,7 @@ import org.antlr.v4.runtime.*;
 
 public class FirstCheckListener extends CheckListener{
 
-    SymbolTable CurrentST = new SymbolTable("goal", null);
+    SymbolTable CurrentST = new SymbolTable("goal", null, null);
 
 
     @Override
@@ -16,7 +16,7 @@ public class FirstCheckListener extends CheckListener{
             System.out.println(ID);
         }
 
-        SymbolTable ClassST = new SymbolTable(ID, CurrentST);
+        SymbolTable ClassST = new SymbolTable(ID, CurrentST, "class");
         CurrentST.add(ClassST);
         STs.put(ctx, ClassST);
         CurrentST = ClassST;
@@ -25,7 +25,7 @@ public class FirstCheckListener extends CheckListener{
 
     @Override
     public void exitMainClassDeclaration(MinijavaParser.MainClassDeclarationContext ctx) {
-        CurrentST = CurrentST.parent;
+        CurrentST = CurrentST.father;
     }
 
     @Override
@@ -36,10 +36,10 @@ public class FirstCheckListener extends CheckListener{
         if (CurrentST.defined(ID)) {
             Token pos = ctx.ID().getSymbol();
             System.out.print("Line " + pos.getLine() + " :  Class ");
-            System.out.println(ID + " has been defined.");
+            System.out.println(ID + " is already defined.");
         }
 
-        SymbolTable ClassST = new SymbolTable(ID, CurrentST);
+        SymbolTable ClassST = new SymbolTable(ID, CurrentST, "Class");
         CurrentST.add(ClassST);
         STs.put(ctx, ClassST);
         CurrentST = ClassST;
@@ -47,7 +47,7 @@ public class FirstCheckListener extends CheckListener{
 
     @Override
     public void exitClassDeclaration(MinijavaParser.ClassDeclarationContext ctx) {
-        CurrentST = CurrentST.parent;
+        CurrentST = CurrentST.father;
     }
 
 
@@ -60,25 +60,53 @@ public class FirstCheckListener extends CheckListener{
         if (CurrentST.defined(ID)) {
             Token pos = ctx.ID().getSymbol();
             System.out.print("Line " + pos.getLine() + " :  Method ");
-            System.out.println(ID + " has been defined in the Class " + CurrentST.name + ".");
+            System.out.println(ID + " is already defined in the Class " + CurrentST.name + ".");
         }
 
-        SymbolTable ClassST = new SymbolTable(ID, CurrentST);
-        CurrentST.add(ClassST);
-        STs.put(ctx, ClassST);
-        CurrentST = ClassST;
+        SymbolTable MethodST = new SymbolTable(ID, CurrentST, ctx.type().getText());
+        CurrentST.add(MethodST);
+        STs.put(ctx, MethodST);
+        CurrentST = MethodST;
     }
 
     @Override
     public void exitMethodDeclaration(MinijavaParser.MethodDeclarationContext ctx) {
-        CurrentST = CurrentST.parent;
+        CurrentST = CurrentST.father;
+    }
+
+    public String getType(SymbolTable ST, String name) {
+        while (ST != null) {
+            if (ST.defined(name)) return ST.children.get(name).type;
+            ST = ST.father;
+        }
+        return null;
     }
 
     @Override
     public void enterAssignStatement(MinijavaParser.AssignStatementContext ctx) {
         String ID = ctx.ID().getText();
-        System.out.print("werwr  "  + ctx.expression().getText());
-        System.out.print(ID + " " );
+        String expr = ctx.expression().getText();
+        //ctx.expression().
+        System.out.print("werwr  "  + expr);
+        System.out.print(ID + " \n" );
+
+        String Ltype = getType(CurrentST, ID);
+        String Rtype = getType(CurrentST, expr);
+
+        //System.out.print(Ltype + " " + Rtype + " \n" );
+
+        Token pos = ctx.ID().getSymbol();
+        if (Ltype == null) {
+            System.out.print("Line " + pos.getLine() + " :  \"");
+            System.out.println(ID + "\" is not defined.");
+        }
+        else {
+            if (!Ltype.equals(Rtype)) {
+                System.out.print("Line " + pos.getLine() + " :  \"");
+                System.out.println(ID + "\" is not matched \"" + expr + "\".");
+            }
+        }
+
         /*
         //System.out.println(ctx);
         // System.out.println(CurrentST.children.containsKey("MyClass"));
@@ -102,12 +130,12 @@ public class FirstCheckListener extends CheckListener{
         if (CurrentST.defined(ID)) {
             Token pos = ctx.ID().getSymbol();
             System.out.print("Line " + pos.getLine() + " :  variable ");
-            System.out.println(ID + " has been defined in the Class" + CurrentST.name + ".");
+            System.out.println(ID + " is already defined in the Class" + CurrentST.name + ".");
         }
 
-        SymbolTable ClassST = new SymbolTable(ID, CurrentST);
-        CurrentST.add(ClassST);
-        STs.put(ctx, ClassST);
+        SymbolTable VarST = new SymbolTable(ID, CurrentST, ctx.type().getText());
+        CurrentST.add(VarST);
+        STs.put(ctx, VarST);
         //CurrentST = ClassST;
     }
 
@@ -119,12 +147,12 @@ public class FirstCheckListener extends CheckListener{
         if (CurrentST.defined(ID)) {
             Token pos = ctx.ID().getSymbol();
             System.out.print("Line " + pos.getLine() + " :  variable ");
-            System.out.println("\"" + ID + "\" has been defined in the method \"" + CurrentST.name + "\".");
+            System.out.println("\"" + ID + "\" is already defined in the method \"" + CurrentST.name + "\".");
         }
 
-        SymbolTable ClassST = new SymbolTable(ID, CurrentST);
-        CurrentST.add(ClassST);
-        STs.put(ctx, ClassST);
+        SymbolTable VarST = new SymbolTable(ID, CurrentST, ctx.type().getText());
+        CurrentST.add(VarST);
+        STs.put(ctx, VarST);
         //CurrentST = ClassST;
     }
 
