@@ -45,12 +45,34 @@ public class FirstCheckListener extends CheckListener{
         CurrentST = ClassST;
     }
 
-
     @Override
     public void exitClassDeclaration(MinijavaParser.ClassDeclarationContext ctx) {
         CurrentST = CurrentST.parent;
     }
 
+
+
+    @Override
+    public void enterMethodDeclaration(MinijavaParser.MethodDeclarationContext ctx) {
+        String ID = ctx.ID().getText();
+        //System.out.println(ctx);
+        // System.out.println(CurrentST.children.containsKey("MyClass"));
+        if (CurrentST.defined(ID)) {
+            Token pos = ctx.ID().getSymbol();
+            System.out.print("Line " + pos.getLine() + " :  Method ");
+            System.out.println(ID + " has been defined in the Class " + CurrentST.name + ".");
+        }
+
+        SymbolTable ClassST = new SymbolTable(ID, CurrentST);
+        CurrentST.add(ClassST);
+        STs.put(ctx, ClassST);
+        CurrentST = ClassST;
+    }
+
+    @Override
+    public void exitMethodDeclaration(MinijavaParser.MethodDeclarationContext ctx) {
+        CurrentST = CurrentST.parent;
+    }
 
     @Override
     public void enterAssignStatement(MinijavaParser.AssignStatementContext ctx) {
@@ -80,7 +102,7 @@ public class FirstCheckListener extends CheckListener{
         if (CurrentST.defined(ID)) {
             Token pos = ctx.ID().getSymbol();
             System.out.print("Line " + pos.getLine() + " :  variable ");
-            System.out.println(ID + " has been defined in " + CurrentST.name + ".");
+            System.out.println(ID + " has been defined in the Class" + CurrentST.name + ".");
         }
 
         SymbolTable ClassST = new SymbolTable(ID, CurrentST);
@@ -88,6 +110,7 @@ public class FirstCheckListener extends CheckListener{
         STs.put(ctx, ClassST);
         //CurrentST = ClassST;
     }
+
 
 
 }
