@@ -3,7 +3,7 @@ package com.scope;
 import java.util.HashMap;
 
 public class SymbolTable {
-    String name;
+    public String name;
     String STType;
     public SymbolTable parent;
 
