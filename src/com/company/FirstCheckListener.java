@@ -111,6 +111,21 @@ public class FirstCheckListener extends CheckListener{
         //CurrentST = ClassST;
     }
 
+    @Override
+    public void enterVarDeclaration(MinijavaParser.VarDeclarationContext ctx) {
+        String ID = ctx.ID().getText();
+        //System.out.println(ctx);
+        // System.out.println(CurrentST.children.containsKey("MyClass"));
+        if (CurrentST.defined(ID)) {
+            Token pos = ctx.ID().getSymbol();
+            System.out.print("Line " + pos.getLine() + " :  variable ");
+            System.out.println("\"" + ID + "\" has been defined in the method \"" + CurrentST.name + "\".");
+        }
 
+        SymbolTable ClassST = new SymbolTable(ID, CurrentST);
+        CurrentST.add(ClassST);
+        STs.put(ctx, ClassST);
+        //CurrentST = ClassST;
+    }
 
 }
