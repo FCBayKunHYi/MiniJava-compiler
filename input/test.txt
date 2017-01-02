@@ -1,0 +1,18 @@
+class MyClass {
+    public static void main(String[] args) {
+        System.out.println(true);
+    }
+}
+class MyClass {
+	int hhhh;
+	boolean a;
+    public boolean check(int a, int b) {
+    	int 3a;
+    	int 324b;
+    	return 2;
+    }
+    public int check() {
+    	return 1;
+    	hhhh = a;
+    }
+}

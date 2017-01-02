@@ -13,7 +13,7 @@ public class Main {
 
     public static void main(String[] args) throws IOException{
 	// write your code here
-        InputStream is = new FileInputStream("example/test.txt");
+        InputStream is = new FileInputStream("input/test.txt");
         ANTLRInputStream input = new ANTLRInputStream(is);
         MinijavaLexer lexer = new MinijavaLexer(input);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
