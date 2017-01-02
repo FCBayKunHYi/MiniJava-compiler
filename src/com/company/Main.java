@@ -7,7 +7,6 @@ import org.antlr.v4.runtime.tree.*;
 
 import java.io.*;
 
-import java.util.List;
 
 
 public class Main {
@@ -27,7 +26,7 @@ public class Main {
 
         //List<Token> TokensList = tokens.getTokens();
 
-        FileWriter fw = null;
+        FileWriter fw;
 
         fw = new FileWriter("lexer.txt");
 
@@ -41,13 +40,13 @@ public class Main {
             fw.write(Voca.getDisplayName(obj.getType()));
             fw.write("      ////   ");
             fw.write(obj.toString() + '\n');
-
+/*
             System.out.print(obj.getText());
             System.out.print(" --> Type : ");
             System.out.print(Voca.getDisplayName(obj.getType()));
             System.out.print("      ////   ");
             System.out.println(obj);
-
+*/
         }
 
         fw.close();
@@ -56,11 +55,11 @@ public class Main {
 
         fw.write("LISP:\n");
         fw.write(tree.toStringTree(parser) + '\n');
-
+/*
         System.out.println("LISP:");
         System.out.println(tree.toStringTree(parser));
         System.out.println();
-
+*/
         fw.close();
 
 
@@ -74,8 +73,9 @@ public class Main {
         MinijavaBaseListener evalByListener = new MinijavaBaseListener();
         walker.walk(new FirstCheckListener(), tree);
 
-        //Trees.inspect(tree, parser);
+        Trees.inspect(tree, parser);
 
+        //int aaa = "df";
 
     }
 }
