@@ -1,4 +1,4 @@
-// Generated from Minijava.g4 by ANTLR 4.5.3
+// Generated from Minijava.g4 by ANTLR 4.6
 package com.company;
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
 public class MinijavaParser extends Parser {
-	static { RuntimeMetaData.checkVersion("4.5.3", RuntimeMetaData.VERSION); }
+	static { RuntimeMetaData.checkVersion("4.6", RuntimeMetaData.VERSION); }
 
 	protected static final DFA[] _decisionToDFA;
 	protected static final PredictionContextCache _sharedContextCache =
@@ -242,6 +242,7 @@ public class MinijavaParser extends Parser {
 			setState(56);
 			match(ID);
 			setState(59);
+			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if (_la==T__1) {
 				{
@@ -799,6 +800,7 @@ public class MinijavaParser extends Parser {
 			setState(149);
 			match(T__8);
 			setState(151);
+			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__29) | (1L << T__35) | (1L << ID))) != 0)) {
 				{
@@ -1853,6 +1855,7 @@ public class MinijavaParser extends Parser {
 			setState(284);
 			match(T__8);
 			setState(293);
+			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__8) | (1L << T__26) | (1L << T__27) | (1L << T__28) | (1L << T__34) | (1L << INT) | (1L << BOOL) | (1L << ID))) != 0)) {
 				{
